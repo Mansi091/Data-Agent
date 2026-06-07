@@ -1,0 +1,14 @@
+# C:\PROJECTS\AI_DATA_AGENT\.gitignore
+
+# Python virtual environment & cache
+.venv/
+__pycache__/
+*.pyc
+uploads/
+
+# Node dependencies & builds
+node_modules/
+dist/
+.env*
+.DS_Store
+*.log
