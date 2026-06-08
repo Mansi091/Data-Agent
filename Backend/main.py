@@ -3,6 +3,8 @@ import time
 import pandas as pd
 from fastapi import FastAPI, UploadFile, HTTPException, File
 from fastapi.middleware.cors import CORSMiddleware
+from routers.charts import router as charts_router
+from routers.cleaning_data import router as cleaning_router
 
 app = FastAPI()
 
@@ -13,6 +15,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(charts_router)
+app.include_router(cleaning_router)
 
 os.makedirs("uploads", exist_ok=True)
 
@@ -55,9 +60,9 @@ async def upload_file(file: UploadFile = File(...)):
         statistics = df.describe().to_dict()
         preview = df.head(5).to_dict(orient="records")
 
-        # ==========================================
-        # NEW: DATA QUALITY & HEALTH CHECKS
-        # ==========================================
+        
+        # DATA QUALITY & HEALTH CHECKS
+      
         health_check = {}
         for col in df.columns:
             empty_count = int(df[col].isnull().sum())
@@ -124,3 +129,13 @@ async def upload_file(file: UploadFile = File(...)):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
+
+
+
+
+
+
+
+        
+
+

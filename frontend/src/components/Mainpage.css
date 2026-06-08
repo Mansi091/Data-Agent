@@ -409,3 +409,266 @@
   margin-top: 35px;
   text-align: left;
 }
+
+/* ==========================================================================
+   CHART CARD & SELECTOR STYLING
+   ========================================================================== */
+
+.chart-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 35px;
+  text-align: left;
+  box-shadow: var(--shadow);
+  transition: border-color 0.2s;
+}
+
+.chart-card:hover {
+  border-color: var(--accent-border);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chart-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.column-dropdown {
+  background: var(--social-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  color: var(--text-h);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.column-dropdown:hover {
+  background: var(--border);
+  border-color: var(--accent);
+}
+
+.column-dropdown:focus {
+  border-color: var(--accent);
+  background: var(--bg);
+}
+
+.chart-loading, .chart-error, .chart-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 350px;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--social-bg);
+  border-radius: 12px;
+  border: 1px dashed var(--border);
+}
+
+.chart-error {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.03);
+}
+
+/* ==========================================================================
+   DATA CLEANING PANEL STYLING
+   ========================================================================== */
+
+.cleaning-card {
+  margin-top: 35px;
+}
+
+.cleaning-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.checkbox-label[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.checkbox-label[disabled] input {
+  cursor: not-allowed;
+}
+
+.cleaning-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-h);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  margin-top: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cleaning-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.cleaning-column-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr;
+  align-items: center;
+  gap: 15px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cleaning-column-row:last-child {
+  border-bottom: none;
+}
+
+.col-name {
+  font-weight: 600;
+  color: var(--text-h);
+  font-size: 14px;
+}
+
+.col-name code {
+  font-size: 12px;
+  padding: 2px 6px;
+}
+
+.col-missing {
+  font-size: 13px;
+  color: #d97706; /* Warning gold color for missing values warning */
+  font-weight: 500;
+}
+
+.cleaning-column-row .col-missing:contains("No missing values") {
+  color: var(--text);
+  font-weight: normal;
+}
+
+.cleaning-select {
+  width: 100%;
+  max-width: 220px;
+  padding: 6px 10px;
+  font-size: 13px;
+  justify-self: end;
+}
+
+.outliers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.outlier-checkbox {
+  background: var(--social-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+
+.outlier-checkbox:hover:not([disabled]) {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+}
+
+.outlier-checkbox[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.clean-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2), 0 2px 4px -1px rgba(16, 185, 129, 0.1) !important;
+}
+
+.clean-btn:hover:not(:disabled) {
+  box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3), 0 4px 6px -2px rgba(16, 185, 129, 0.2) !important;
+  filter: brightness(1.1);
+}
+
+/* ==========================================================================
+   DASHBOARD TABS NAVIGATION STYLING
+   ========================================================================== */
+
+.dashboard-tabs {
+  display: flex;
+  gap: 10px;
+  border-bottom: 1.5px solid var(--border);
+  padding-bottom: 14px;
+  margin-bottom: 30px;
+  overflow-x: auto;
+  scrollbar-width: none; /* Hide scrollbar for clean visual on Firefox */
+}
+
+.dashboard-tabs::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome/Safari */
+}
+
+.tab-btn {
+  background: none;
+  border: 1px solid transparent;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  outline: none;
+}
+
+.tab-btn:hover {
+  background: var(--social-bg);
+  color: var(--text-h);
+  transform: translateY(-1px);
+}
+
+.tab-btn.active {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+  box-shadow: 0 4px 6px -1px rgba(170, 59, 255, 0.05);
+}
