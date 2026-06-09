@@ -5,17 +5,16 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import Dict, List
 
-# 1. Create the router object
+
 router = APIRouter()
 
-# 2. Pydantic request model to structure incoming options
+# 2. Pydantic request 
 class CleanRequest(BaseModel):
     filename: str
     drop_duplicates: bool = False
     fill_missing: Dict[str, str] = {}  # { "age": "mean", "gender": "mode" }
     remove_outliers: List[str] = []   # [ "price", "quantity" ]
 
-# 3. POST Endpoint to clean the data
 @router.post("/clean-data")
 def clean_data(request: CleanRequest):
     file_path = f"uploads/{request.filename}"
@@ -33,11 +32,11 @@ def clean_data(request: CleanRequest):
 
     original_rows = len(df)
 
-    # Action 1: Remove Duplicate Rows
+    # Remove Duplicate Rows
     if request.drop_duplicates:
         df.drop_duplicates(inplace=True)
 
-    # Action 2: Fill Missing Values
+    #Fill Missing Values
     for col, strategy in request.fill_missing.items():
         if col not in df.columns:
             continue
@@ -59,7 +58,7 @@ def clean_data(request: CleanRequest):
             fill_val = 0 if pd.api.types.is_numeric_dtype(df[col]) else "Unknown"
             df[col] = df[col].fillna(fill_val)
 
-    # Action 3: Remove Outliers (IQR Method)
+    # Remove Outliers 
     for col in request.remove_outliers:
         if col not in df.columns or not pd.api.types.is_numeric_dtype(df[col]):
             continue
@@ -70,10 +69,8 @@ def clean_data(request: CleanRequest):
         lower_bound = q1 - 1.5 * iqr
         upper_bound = q3 + 1.5 * iqr
         
-        # Filter rows
         df = df[(df[col] >= lower_bound) & (df[col] <= upper_bound)]
 
-    # 4. Save the cleaned file
     cleaned_filename = f"cleaned_{request.filename}"
     cleaned_file_path = f"uploads/{cleaned_filename}"
     
@@ -92,7 +89,6 @@ def clean_data(request: CleanRequest):
         "cleaned_rows": len(df)
     }
 
-# 4. GET Endpoint to trigger automatic file downloads in browser
 @router.get("/download")
 def download_file(filename: str):
     file_path = f"uploads/{filename}"
