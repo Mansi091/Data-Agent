@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 import "./Mainpage.css";
+import ChatBox from "./ChatBox";
 
 function AnalysisDashboard({ summary, onBack }) {
   if (!summary) return null;
@@ -334,7 +335,7 @@ function AnalysisDashboard({ summary, onBack }) {
                   return (
                     <div key={colName} className="cleaning-column-row">
                       <span className="col-name">{colName} <code>({summary.data_types[colName]})</code></span>
-                      <span className="col-missing">{missingCount > 0 ? `${missingCount} missing values (${colHealth.missing.percentage}%)` : "No missing values"}</span>
+                      <span className={`col-missing ${missingCount === 0 ? "no-missing" : ""}`}>{missingCount > 0 ? `${missingCount} missing values (${colHealth.missing.percentage}%)` : "No missing values"}</span>
                       <select
                         value={fillMissing[colName] || "none"}
                         onChange={(e) => handleFillMissingChange(colName, e.target.value)}
@@ -471,22 +472,9 @@ function AnalysisDashboard({ summary, onBack }) {
           </div>
         )}
 
-        {/* 5. AI Chat Tab Placeholder */}
+        {/* 5. AI Chat Tab */}
         {activeTab === "chat" && (
-          <div className="chart-card">
-            <div className="chart-header">
-              <h3 className="preview-title" style={{ margin: 0 }}>AI Data Assistant</h3>
-            </div>
-            <div className="chart-empty" style={{ border: "1px dashed var(--border)", background: "var(--social-bg)", borderRadius: "12px", height: "300px" }}>
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: "12px", color: "var(--accent)" }}>
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-              </svg>
-              <div>
-                <p style={{ fontWeight: "600", color: "var(--text-h)", marginBottom: "4px" }}>AI Chat is Coming Next!</p>
-                <p style={{ fontSize: "13px", color: "var(--text)", maxWidth: "300px", margin: "0 auto" }}>We will connect this tab to a RAG pipeline so you can query your dataset in plain English.</p>
-              </div>
-            </div>
-          </div>
+          <ChatBox filename={summary.filename} />
         )}
       </div>
     </div>
