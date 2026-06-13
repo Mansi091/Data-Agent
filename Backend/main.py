@@ -5,12 +5,19 @@ from fastapi import FastAPI, UploadFile, HTTPException, File
 from fastapi.middleware.cors import CORSMiddleware
 from routers.charts import router as charts_router
 from routers.cleaning_data import router as cleaning_router
+from routers.chatboxx import router as chatboxx_router
+
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -18,6 +25,7 @@ app.add_middleware(
 
 app.include_router(charts_router)
 app.include_router(cleaning_router)
+app.include_router(chatboxx_router)
 
 os.makedirs("uploads", exist_ok=True)
 
@@ -81,7 +89,7 @@ async def upload_file(file: UploadFile = File(...)):
             else:
                 category_type = "High Cardinality"
 
-            # 2. Outlier Detection (only for numeric columns with variation)
+            # 2. Outlier Detection 
             outliers_info = None
             if col in numerical_colums and unique_count > 1:
                 q1 = df[col].quantile(0.25)
@@ -122,7 +130,7 @@ async def upload_file(file: UploadFile = File(...)):
             "memory_usage": memory_usage,
             "statistics": statistics,
             "preview": preview,
-            "health_check": health_check  # <-- Added health checks list
+            "health_check": health_check 
         }
         
     except HTTPException:

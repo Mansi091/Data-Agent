@@ -7,3 +7,9 @@ scikit-learn
 python-multipart
 openpyxl
 pillow
+Groq
+langchain
+langchain-core
+langchain-groq
+langchain-community
+python-dotenv

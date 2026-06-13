@@ -5,7 +5,6 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import Dict, List
 
-
 router = APIRouter()
 
 # 2. Pydantic request 
@@ -14,6 +13,7 @@ class CleanRequest(BaseModel):
     drop_duplicates: bool = False
     fill_missing: Dict[str, str] = {}  # { "age": "mean", "gender": "mode" }
     remove_outliers: List[str] = []   # [ "price", "quantity" ]
+
 
 @router.post("/clean-data")
 def clean_data(request: CleanRequest):
@@ -41,7 +41,6 @@ def clean_data(request: CleanRequest):
         if col not in df.columns:
             continue
         
-        # Don't do anything if no missing values exist
         if df[col].isnull().sum() == 0:
             continue
 
