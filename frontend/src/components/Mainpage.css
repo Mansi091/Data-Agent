@@ -83,6 +83,7 @@
   margin: 15px auto;
   font-size: 14px;
   color: var(--text);
+  width: fit-content;
 }
 
 /* Selected File Info */
